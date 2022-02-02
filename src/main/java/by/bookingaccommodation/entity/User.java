@@ -1,5 +1,7 @@
 package by.bookingaccommodation.entity;
 
+import by.bookingaccommodation.entity.roles.UserRole;
+import by.bookingaccommodation.entity.statuses.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
