@@ -23,4 +23,10 @@ public class User {
     private String dateOfBirth;
     private String nationality;
     private String address;
+
+    @Enumerated(value = EnumType.STRING)
+    private UserRole userRole = UserRole.USER;
+
+    @Enumerated(value = EnumType.STRING)
+    private UserStatus userStatus = UserStatus.ACTIVE;
 }

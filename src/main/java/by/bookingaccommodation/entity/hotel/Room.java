@@ -1,13 +1,11 @@
-package by.bookingaccommodation.entity;
+package by.bookingaccommodation.entity.hotel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,8 +17,13 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int floor;
-    private int numberOfPlacesOfResidence;
-    private boolean availabilityOfABathroom;
     private String type;
+    private double cost;
+    private int numberOfBeds;
+    private boolean conditioner;
+    private boolean TV;
+    private boolean internet;
+    private boolean miniBar;
+    private boolean availabilityOfABathroom;
     private long hotelId;
 }
