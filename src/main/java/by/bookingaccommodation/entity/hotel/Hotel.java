@@ -1,4 +1,4 @@
-package by.bookingaccommodation.entity;
+package by.bookingaccommodation.entity.hotel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

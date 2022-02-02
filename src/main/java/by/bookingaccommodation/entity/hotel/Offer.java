@@ -1,5 +1,4 @@
-package by.bookingaccommodation.entity;
-
+package by.bookingaccommodation.entity.hotel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +13,12 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Data
 @Entity
-public class Service {
+public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String description;
+    private double cost;
     private long hotelId;
+    private long serviceId;
 }
