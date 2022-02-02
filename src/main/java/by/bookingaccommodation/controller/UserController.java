@@ -72,12 +72,13 @@ public class UserController {
         return "/user/registration";
     }
 
-    @GetMapping("/update")
-    public String update(HttpSession session, Model model) {
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("user");
         model.addAttribute("user", sessionUser);
-        return "/user/update";
+        return "/user/profile";
     }
+
 
     @PutMapping("/update")
     public String update(@RequestBody UpdateUserDto userDto, BindingResult bindingResult, HttpSession session) {
