@@ -25,9 +25,9 @@ public class Room {
     private boolean internet;
     private boolean miniBar;
     private boolean availabilityOfABathroom;
+    private long hotelId;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> imageUrl;
+    private List<String> imageUrls;
 
-    private long hotelId;
 }

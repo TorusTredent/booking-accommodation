@@ -15,6 +15,11 @@ public class BookingService {
 
     public Booking reserve(Booking booking) {
         log.info(String.format("Booking {} save", booking));
-        return bookingRepository.save(booking).orElse(null);
+        if (bookingRepository.find(booking).isPresent()) {
+            log.warn("Bad request %s booking is already exist");
+            return null;
+        } else {
+            return bookingRepository.save(booking).orElse(null);
+        }
     }
 }

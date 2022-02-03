@@ -18,4 +18,16 @@ public class HotelService {
         log.info(String.format("Request hotelId {} exist", id));
         return hotelRepository.findHotelById(id).orElse(null);
     }
+
+    public Hotel update(Hotel hotel, Hotel hotelDto) {
+        log.info(String.format("Request update {}", hotel.getName()));
+        hotelDto.setId(hotel.getId());
+        hotelDto.setRating(hotel.getRating());
+        return hotelRepository.save(hotelDto);
+    }
+
+    public void delete(Hotel hotel) {
+        log.info(String.format("Request delete {}", hotel.getName()));
+        hotelRepository.delete(hotel);
+    }
 }

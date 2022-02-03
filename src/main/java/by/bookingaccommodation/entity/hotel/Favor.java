@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Data
 @Entity
-public class Service {
+public class Favor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -25,9 +25,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User update(String email, User updateUser) {
-        log.info("Request update {}", email);
-        User user = userRepository.findByEmail(email).orElse( null);
+    public User update(User user, User updateUser) {
+        log.info("Request update {}", user.getEmail());
         updateUser.setId(user.getId());
         updateUser.setUserRole(user.getUserRole());
         updateUser.setUserStatus(user.getUserStatus());
@@ -35,6 +34,7 @@ public class UserService {
     }
 
     public void delete(User user) {
+        log.info("Request delete {}", user.getEmail());
         userRepository.delete(user);
     }
 }
