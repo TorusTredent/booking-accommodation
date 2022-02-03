@@ -19,6 +19,5 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double cost;
-    private long hotelId;
     private long serviceId;
 }

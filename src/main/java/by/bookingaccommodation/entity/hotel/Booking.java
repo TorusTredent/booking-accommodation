@@ -22,7 +22,6 @@ public class Booking {
     private long userId;
     private long offerId;
     private long roomId;
-    private long serviceId;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 }

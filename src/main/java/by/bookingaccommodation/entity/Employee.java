@@ -19,9 +19,6 @@ public class Employee {
     private long id;
     private long hotelId;
 
-    @OneToOne
-    private User user;
-
     @Enumerated(value = EnumType.STRING)
     private HotelRole hotelRole = HotelRole.EMPLOYEE;
 }

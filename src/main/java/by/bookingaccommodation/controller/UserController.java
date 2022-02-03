@@ -40,7 +40,11 @@ public class UserController {
             model.addAttribute("userMessage", true);
         } else {
             if (user.getPassword().equals(userDto.getPassword())) {
-                session.setAttribute("user", user);
+                if (user.getEmployeeId() == 0) {
+                    session.setAttribute("user", user);
+                } else {
+                    session.setAttribute("employee", user);
+                }
                 return "redirect: /";
             } else {
                 model.addAttribute("passwordMessage", true);

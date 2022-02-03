@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +21,7 @@ public class Hotel {
     private String street;
     private String home;
     private double rating;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> imageUrl;
 }

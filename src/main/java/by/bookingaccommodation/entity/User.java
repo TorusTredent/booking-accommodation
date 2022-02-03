@@ -25,6 +25,8 @@ public class User {
     private String dateOfBirth;
     private String nationality;
     private String address;
+    private String imageUrl;
+    private long employeeId;
 
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole = UserRole.USER;
