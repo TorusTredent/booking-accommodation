@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User update(User user, User updateUser) {
-        log.info("Request update {}", user.getEmail());
+        log.info(String.format("Request update {}", user.getEmail()));
         updateUser.setId(user.getId());
         updateUser.setUserRole(user.getUserRole());
         updateUser.setUserStatus(user.getUserStatus());
@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public void delete(User user) {
-        log.info("Request delete {}", user.getEmail());
+        log.info(String.format("Request delete {}", user.getEmail()));
         userRepository.delete(user);
     }
 }

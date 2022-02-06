@@ -53,4 +53,14 @@ public class BookingController {
             //////////доделать редирект добавления в корзину
         }
     }
+
+    @DeleteMapping("/{bookingNumber}")
+    public String delete(@PathVariable long bookingNumber, Model model) {
+        boolean delete = bookingService.deleteByNumber(bookingNumber);
+        if (!delete) {
+            model.addAttribute("errorMessage", true);
+        }
+        return "redirect: /";
+
+    }
 }
