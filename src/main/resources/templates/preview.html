@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Preview</title>
+
+    <link rel="stylesheet" th:href="@{/preview.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div th:replace="_previewHeader :: content"></div>
+
+<ul class="slideshow">
+    <li><span></span></li>
+    <li><span></span></li>
+    <li><span></span></li>
+    <li><span></span></li>
+    <li><span></span></li>
+</ul>
+</body>
+</html>

@@ -6,10 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional
 public class BookingService {
 
     @Autowired
@@ -17,12 +19,7 @@ public class BookingService {
 
     public Booking reserve(Booking booking) {
         log.info(String.format("Booking {} save", booking));
-        if (bookingRepository.find(booking).isPresent()) {
-            log.warn(String.format("Bad request %s booking is already exist", booking.getNumber()));
-            return null;
-        } else {
-            return bookingRepository.save(booking).orElse(null);
-        }
+        return bookingRepository.save(booking);
     }
 
     public boolean deleteByNumber(long bookingNumber) {

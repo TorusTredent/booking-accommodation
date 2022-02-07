@@ -1,0 +1,74 @@
+.slideshow {
+  list-style-type: none;
+}
+
+/** SLIDESHOW **/
+.slideshow,
+.slideshow:after {
+  top: 70px;/*Not sure why I needed this fix*/
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  z-index: 0;
+}
+
+.slideshow li span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  color: transparent;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 30s linear infinite 0s;
+}
+
+
+
+.slideshow li:nth-child(1) span {
+  background-image: url("https://wallpapershome.ru/images/wallpapers/tayland-3840x2160-5k-4k-luchshie-plyaji-luchshie-oteli-659.jpg");
+}
+.slideshow li:nth-child(2) span {
+  background-image: url("https://www.pixel4k.com/wp-content/uploads/2018/09/paris-france-hotel-hotel-du-louvre-4k_1538064711.jpg");
+  animation-delay: 6s;
+}
+.slideshow li:nth-child(3) span {
+  background-image: url("https://wallpapershome.ru/images/wallpapers/one-only-the-palm-3840x2160-dubay-luchshie-oteli-turizm-kurort-4601.jpg");
+  animation-delay: 12s;
+}
+.slideshow li:nth-child(4) span {
+  background-image: url("https://www.wallpapers13.com/wp-content/uploads/2019/04/The-Venetian-Resort-Hotel-Casino-Las-Vegas-Nevada-United-States-4K-Ultra-HD-Desktop-Wallpapers-for-Computers-Laptop-Tablet-And-Mobile-Phones.jpg");
+  animation-delay: 18s;
+}
+.slideshow li:nth-child(5) span {
+  background-image: url("https://wallpaperbat.com/img/338186-bali-desktop-wallpaper-top-free-bali-desktop-background.jpg");
+  animation-delay: 24s;
+}
+
+
+
+@keyframes imageAnimation {
+  0% { opacity: 0; animation-timing-function: ease-in; }
+  8% { opacity: 1; animation-timing-function: ease-out; }
+  17% { opacity: 1 }
+  25% { opacity: 0 }
+}
+
+
+@keyframes titleAnimation {
+  0% { opacity: 0 }
+  8% { opacity: 1 }
+  17% { opacity: 1 }
+  19% { opacity: 0 }
+
+}
+
+
+.no-cssanimations .cb-slideshow li span {
+  opacity: 1;
+}

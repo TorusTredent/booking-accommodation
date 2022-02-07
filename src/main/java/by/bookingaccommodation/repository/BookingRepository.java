@@ -7,9 +7,6 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    Optional<Booking> save(Booking booking);
-    Optional<Booking> find(Booking booking);
     Optional<Long> findTopByOrderByIdDesc();
-
     Optional<Booking> findByNumber(long bookingNumber);
 }
