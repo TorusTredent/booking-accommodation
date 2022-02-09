@@ -1,6 +1,6 @@
 package by.bookingaccommodation.controller;
 
-import by.bookingaccommodation.dto.SaveBookingDto;
+import by.bookingaccommodation.dto.booking.SaveBookingDto;
 import by.bookingaccommodation.entity.User;
 import by.bookingaccommodation.entity.hotel.Booking;
 import by.bookingaccommodation.service.BookingService;

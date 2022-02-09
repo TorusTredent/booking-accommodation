@@ -26,4 +26,15 @@ public class Hotel {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> imageUrls;
+
+    public Hotel(String name, String country, String city, String street, String home, String phoneNumber, double rating, List<String> imageUrls) {
+        this.name = name;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.home = home;
+        this.phoneNumber = phoneNumber;
+        this.rating = rating;
+        this.imageUrls = imageUrls;
+    }
 }

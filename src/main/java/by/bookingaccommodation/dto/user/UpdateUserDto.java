@@ -1,4 +1,4 @@
-package by.bookingaccommodation.dto;
+package by.bookingaccommodation.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,13 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDto {
+public class UpdateUserDto {
 
     private String email;
     private String password;
+    private String name;
+    private String phoneNumber;
+    private String dateOfBirth;
+    private String nationality;
+    private String address;
 }

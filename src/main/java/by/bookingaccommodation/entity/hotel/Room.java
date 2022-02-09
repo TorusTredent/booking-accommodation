@@ -29,5 +29,4 @@ public class Room {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> imageUrls;
-
 }

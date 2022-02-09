@@ -1,12 +1,10 @@
 package by.bookingaccommodation.controller;
 
-import by.bookingaccommodation.dto.UpdateHotelDto;
-import by.bookingaccommodation.entity.Employee;
+import by.bookingaccommodation.dto.hotel.UpdateHotelDto;
 import by.bookingaccommodation.entity.User;
 import by.bookingaccommodation.entity.hotel.Hotel;
 import by.bookingaccommodation.entity.hotel.Favor;
 import by.bookingaccommodation.entity.hotel.Room;
-import by.bookingaccommodation.service.EmployeeService;
 import by.bookingaccommodation.service.FavorService;
 import by.bookingaccommodation.service.HotelService;
 import by.bookingaccommodation.service.RoomService;
@@ -35,9 +33,6 @@ public class HotelController {
 
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private EmployeeService employeeService;
 
     @GetMapping("/{hotelId}")
     public String personal(@PathVariable long hotelId, BindingResult bindingResult, Model model, HttpSession session) {

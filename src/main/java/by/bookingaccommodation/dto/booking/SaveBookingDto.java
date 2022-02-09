@@ -1,4 +1,4 @@
-package by.bookingaccommodation.dto;
+package by.bookingaccommodation.dto.booking;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

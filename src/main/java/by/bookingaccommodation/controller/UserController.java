@@ -1,7 +1,7 @@
 package by.bookingaccommodation.controller;
 
-import by.bookingaccommodation.dto.UpdateUserDto;
-import by.bookingaccommodation.dto.UserDto;
+import by.bookingaccommodation.dto.user.UpdateUserDto;
+import by.bookingaccommodation.dto.user.UserDto;
 import by.bookingaccommodation.entity.Employee;
 import by.bookingaccommodation.entity.User;
 import by.bookingaccommodation.entity.hotel.Hotel;
