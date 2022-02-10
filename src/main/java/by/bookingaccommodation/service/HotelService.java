@@ -43,16 +43,20 @@ public class HotelService {
         return hotelRepository.findAllByCountry(country).orElse(null);
     }
 
+    public List<Hotel> sortedByCountry(List<Hotel> hotels, String country) {
+        return hotels.stream().filter(hotel -> hotel.getCountry().equals(country)).collect(Collectors.toList());
+    }
+
     public List<Hotel> findHotelsBySort(List<Room> rooms) {
         List<Long> hotelIdList = rooms.stream().map(Room::getHotelId).collect(Collectors.toList());
-        return !hotelIdList.isEmpty() ? hotelRepository.findAllById(hotelIdList) : null;
+        return hotelIdList.isEmpty() ? null : hotelRepository.findAllById(hotelIdList);
     }
 
-    public List<Hotel> search(String search) {
-        return hotelRepository.findByName("%" + search + "%").orElse(null);
+    public List<Hotel> searchByNameAndCountry(String search, String country) {
+        return hotelRepository.findByNameAndCountry("%" + search + "%", country).orElse(null);
     }
 
-    public List<Hotel> sortedByRating(List<Hotel> hotels, double rating) {
+    public List<Hotel> sortedHotelsByRating(List<Hotel> hotels, double rating) {
         List<Hotel> finalHotels = new ArrayList<>();
         for (Hotel hotel : hotels) {
             if (hotel.getRating() >= rating) {

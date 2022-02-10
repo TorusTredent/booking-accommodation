@@ -12,5 +12,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Optional<List<Room>> findAllByHotelId(long hotelId);
 
+    Optional<List<Room>> findAllByHotelId(List<Long> hotelId);
+
     Optional<List<Room>> findAllByCostAfter(double cost);
 }

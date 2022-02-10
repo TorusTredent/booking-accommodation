@@ -14,6 +14,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     Optional<List<Hotel>> findAllByCountry(String country);
 
-    @Query(value = "from Hotel where lower (name) like lower(:name)")
-    Optional<List<Hotel>> findByName(@Param("name") String name);
+    @Query(value = "from Hotel where lower (name) like lower(:name) and country =:country")
+    Optional<List<Hotel>> findByNameAndCountry(@Param("name") String name, @Param("country") String country);
 }

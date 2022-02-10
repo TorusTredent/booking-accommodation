@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -18,22 +19,25 @@ public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
 
-    private List<Room> finalRooms;
-
     public List<Room> findRoomsByHotelId(long hotelId) {
         log.info(String.format("Request list Rooms by hotelId %s", hotelId));
         return roomRepository.findAllByHotelId(hotelId).orElse(null);
     }
 
-    public List<Room> findRoomsBySort(Room room) {
-        finalRooms = roomRepository.findAllByCostAfter(room.getCost()).orElse(null);
+    public List<Room> findRoomsByHotelId(List<Hotel> hotels) {
+        List<Long> hotelIdList = hotels.stream().map(Hotel::getId).collect(Collectors.toList());
+        return roomRepository.findAllByHotelId(hotelIdList).orElse(null);
+    }
 
-        if (room.getType() != null) {
+    public List<Room> findRoomsBySort(List<Room> finalRooms, Room room) {
+        if (room.getCost() > 0 && finalRooms != null) {
+            finalRooms = useFilterParameter(finalRooms, room, "cost");
+        }
+        if (room.getType() != null && finalRooms != null) {
             finalRooms = useFilterParameter(finalRooms, room, "type");
         }
         if (room.getNumberOfBeds() >= 1 && finalRooms != null) {
             finalRooms = useFilterParameter(finalRooms, room, "numberOfBeds");
-
         }
         if (room.isConditioner() && finalRooms != null) {
             finalRooms = useFilterParameter(finalRooms, room, "conditioner");
@@ -59,6 +63,12 @@ public class RoomService {
         boolean filter = false;
         for (Room roo : rooms) {
             switch (parameter) {
+                case "cost": {
+                    if (roo.getCost() >= room.getCost()) {
+                        finalRooms.add(roo);
+                        filter = true;
+                    }
+                }
                 case "type": {
                     if (roo.getType().equals(room.getType())) {
                         finalRooms.add(roo);
