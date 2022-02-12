@@ -26,7 +26,7 @@ public class RoomService {
 
     public List<Room> findRoomsByHotelId(List<Hotel> hotels) {
         List<Long> hotelIdList = hotels.stream().map(Hotel::getId).collect(Collectors.toList());
-        return roomRepository.findAllByHotelId(hotelIdList).orElse(null);
+        return roomRepository.findByHotelIdIn(hotelIdList).orElse(null);
     }
 
     public List<Room> findRoomsBySort(List<Room> finalRooms, Room room) {

@@ -7,14 +7,21 @@ import by.bookingaccommodation.service.HotelService;
 import by.bookingaccommodation.service.RoomService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/hotel")
@@ -31,19 +38,24 @@ public class HomeHotelController {
 
     private List<Hotel> hotels;
 
-    @GetMapping("/home")
-    public String home(@RequestParam(defaultValue = "1") int page, Model model, HttpSession session) {
+    private static final int HOTELS_PER_PAGE = 5;
+
+    @GetMapping("/home/{currentPage}")
+    public String home(@PathVariable() int currentPage,
+                       Model model, HttpSession session) {
         String country = (String) session.getAttribute("country");
-        if (session.getAttribute("hotels") == null) {
+        hotels = (List<Hotel>) session.getAttribute("hotels");
+        if (hotels == null || hotels.isEmpty()) {
             hotels = hotelService.findHotelsByCountry(country);
             session.setAttribute("hotels", hotels);
-        } else {
-
-            hotels = (List<Hotel>) session.getAttribute("hotels");
         }
-        model.addAttribute("hotelImages", getFirstHotelImage(hotels));
-        model.addAttribute("hotelList", hotels);
-        return "home";
+        Page<Hotel> hotelPage = hotelService.findPaginated(HOTELS_PER_PAGE, currentPage, hotels);
+        List<Hotel> hotelList = hotelPage.getContent();
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", hotelPage.getTotalPages());
+        model.addAttribute("totalItems", hotelPage.getTotalElements());
+        model.addAttribute("hotelList", hotelList);
+        return "homeHotel";
     }
 
     @PostMapping("/search")
@@ -62,12 +74,6 @@ public class HomeHotelController {
         return "redirect: /hotel/home";
     }
 
-    @GetMapping()
-    public String preview() {
-        return "preview";
-    }
-
-
     private List<Hotel> findHotelsBySortAndCountry(SortHotelDto sortHotelDto, String country) {
         List<Hotel> hotelsByCountry = hotelService.findHotelsByCountry(country);
         List<Room> roomsByHotelId = roomService.findRoomsByHotelId(hotelsByCountry);
@@ -76,7 +82,5 @@ public class HomeHotelController {
         return hotelService.sortedHotelsByRating(sortedHotelsByRooms, sortHotelDto.getRating());
     }
 
-    private List<String> getFirstHotelImage(List<Hotel> hotels) {
-        return hotels.stream().map(hotel -> hotel.getImageUrls().get(1)).collect(Collectors.toList());
-    }
+
 }

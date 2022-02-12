@@ -5,9 +5,14 @@ import by.bookingaccommodation.entity.hotel.Room;
 import by.bookingaccommodation.repository.HotelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +59,20 @@ public class HotelService {
 
     public List<Hotel> searchByNameAndCountry(String search, String country) {
         return hotelRepository.findByNameAndCountry("%" + search + "%", country).orElse(null);
+    }
+
+    public Page<Hotel> findPaginated(int pageSize, int currentPage, List<Hotel> hotels) {
+        int startItem = (currentPage - 1) * pageSize;
+        List<Hotel> list;
+
+        if (hotels.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, hotels.size());
+            list = hotels.subList(startItem, toIndex);
+        }
+        Page<Hotel> hotelPage = new PageImpl<>(list,  PageRequest.of(currentPage - 1, pageSize), hotels.size());
+        return hotelPage;
     }
 
     public List<Hotel> sortedHotelsByRating(List<Hotel> hotels, double rating) {

@@ -36,6 +36,5 @@ public class BookingService {
     public long findLastBookingNumber() {
         Optional<Long> lastBookingNumber = bookingRepository.findTopByOrderByIdDesc();
         return lastBookingNumber != null ? lastBookingNumber.get() + 1 : 1;
-
     }
 }
