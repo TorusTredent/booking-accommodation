@@ -50,28 +50,19 @@ public class RoomService {
         Map<Long, Double> cost = new HashMap<>();
         double minCost = rooms.get(0).getCost();
         int index = 0;
-//        for (Long hotelId : hotelIds) {
-//            for (int i = index; i < rooms.size(); i++) {
-//                if (hotelId == rooms.get(i).getHotelId()) {
-//                    if (minCost > rooms.get(i).getCost()) {
-//                        minCost = rooms.get(i).getCost();
-//                    }
-//                } else {
-//                    minCost = rooms.get(i).getCost();
-//                    if (minCost > rooms.get(i).getCost()) {
-//                        minCost = rooms.get(i).getCost();
-//                    }
-//                    if (index != 0) {
-//                        index = --i;
-//                    }
-//                    cost.put(rooms.get(--i).getHotelId(), minCost);
-//                    break;
-//                }
-//                index++;
-//            }
-//        }
-        for (Room room : rooms) {
-            cost.put(hotelIds.get(0), room.getCost());
+        for (int j = 0; j < hotelIds.size(); j++) {
+            for (int i = index; i < rooms.size() + 1; i++) {
+                if (hotelIds.get(j) == rooms.get(i).getHotelId()) {
+                    if (minCost > rooms.get(i).getCost()) {
+                        minCost = rooms.get(i).getCost();
+                    }
+                } else {
+                    index = i;
+                    cost.put(hotelIds.get(j), minCost);
+                    minCost = rooms.get(i).getCost();
+                    break;
+                }
+            }
         }
         return cost;
     }
