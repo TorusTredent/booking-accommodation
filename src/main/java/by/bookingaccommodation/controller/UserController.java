@@ -106,7 +106,12 @@ public class UserController {
         User update = userService.update(sessionUser, mapper.map(userDto, User.class));
         session.setAttribute("user", update);
         model.addAttribute("acceptMessage", true);
-        return "user/profile";
+        return "/user/profile";
+    }
+
+    @GetMapping("/order/{hotelId}/{roomId}")
+    public String order(@PathVariable("hotelId") long hotelId, @PathVariable("roomId") long roomId, Model model, HttpSession session) {
+        return "/user/order";
     }
 
     @DeleteMapping()

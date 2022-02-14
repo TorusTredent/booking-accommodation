@@ -35,10 +35,7 @@ public class HotelController {
     private RoomService roomService;
 
     @GetMapping("/{hotelId}")
-    public String personal(@PathVariable long hotelId, BindingResult bindingResult, Model model, HttpSession session) {
-        if(bindingResult.hasErrors()) {
-            return "redirect: /";
-        }
+    public String personal(@PathVariable long hotelId, Model model, HttpSession session) {
         Hotel hotel = hotelService.findHotelById(hotelId);
         if (hotel == null) {
             return "redirect: /";

@@ -53,8 +53,12 @@ public class HotelService {
     }
 
     public List<Hotel> findHotelsBySort(List<Room> rooms) {
-        List<Long> hotelIdList = rooms.stream().map(Room::getHotelId).collect(Collectors.toList());
-        return hotelIdList.isEmpty() ? null : hotelRepository.findAllById(hotelIdList);
+        if (rooms == null) {
+            return null;
+        } else {
+            List<Long> hotelIdList = rooms.stream().map(Room::getHotelId).collect(Collectors.toList());
+            return hotelIdList.isEmpty() ? null : hotelRepository.findAllById(hotelIdList);
+        }
     }
 
     public List<Hotel> searchByNameAndCountry(String search, String country) {
@@ -77,11 +81,15 @@ public class HotelService {
 
     public List<Hotel> sortedHotelsByRating(List<Hotel> hotels, double rating) {
         List<Hotel> finalHotels = new ArrayList<>();
+        if (hotels == null) {
+            return null;
+        }
         for (Hotel hotel : hotels) {
             if (hotel.getRating() >= rating) {
                 finalHotels.add(hotel);
             }
         }
-        return finalHotels;
+        return finalHotels.isEmpty() ? null : finalHotels;
     }
+
 }

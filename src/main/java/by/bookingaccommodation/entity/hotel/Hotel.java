@@ -1,10 +1,14 @@
 package by.bookingaccommodation.entity.hotel;
 
+import by.bookingaccommodation.service.HotelService;
+import by.bookingaccommodation.service.RoomService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @NoArgsConstructor
@@ -12,6 +16,9 @@ import java.util.List;
 @Data
 @Entity
 public class Hotel {
+
+    @Autowired
+    private transient RoomService roomService;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +29,7 @@ public class Hotel {
     private String street;
     private String home;
     private String phoneNumber;
+    private String description;
     private double rating;
 
     @ElementCollection(fetch = FetchType.EAGER)

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class SortHotelDto {
+public class FilterHotelDto {
 
     private double cost;
     private double rating;
@@ -19,5 +19,4 @@ public class SortHotelDto {
     private boolean TV;
     private boolean internet;
     private boolean miniBar;
-    private boolean availabilityOfABathroom;
 }
