@@ -20,11 +20,12 @@ public class User {
     private long id;
     private String email;
     private String password;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String phoneNumber;
     private String dateOfBirth;
     private String nationality;
-    private String address;
+    private String location;
     private String imageUrl;
     private long employeeId;
 

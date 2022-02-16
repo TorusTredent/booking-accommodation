@@ -41,24 +41,19 @@ public class RoomService {
         return getRoomsCost(rooms, hotelIds);
     }
 
-    public double getRoomCostByHotelId(long hotelId) {
-        Room room = roomRepository.findByHotelId(hotelId).orElse(null);
-        return room != null ? room.getCost() : 0;
-    }
-
     private Map<Long, Double> getRoomsCost(List<Room> rooms, List<Long> hotelIds) {
         Map<Long, Double> cost = new HashMap<>();
         double minCost = rooms.get(0).getCost();
         int index = 0;
-        for (int j = 0; j < hotelIds.size(); j++) {
-            for (int i = index; i < rooms.size() + 1; i++) {
-                if (hotelIds.get(j) == rooms.get(i).getHotelId()) {
+        for (Long hotelId : hotelIds) {
+            for (int i = index; i < rooms.size(); i++) {
+                if (hotelId == rooms.get(i).getHotelId()) {
                     if (minCost > rooms.get(i).getCost()) {
                         minCost = rooms.get(i).getCost();
                     }
                 } else {
                     index = i;
-                    cost.put(hotelIds.get(j), minCost);
+                    cost.put(hotelId, minCost);
                     minCost = rooms.get(i).getCost();
                     break;
                 }
