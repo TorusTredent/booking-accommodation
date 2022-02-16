@@ -19,6 +19,12 @@
 <div class="row" style="max-width: 1519px">
     <div class="col-md-3">
         <div class="wrapper center-block hidden-xs">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${hotelsNotFound != null}"
+                 th:text="${hotelsNotFound}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <form>
                 <div class="form-group">
                     <input type="date" class="form-control">
@@ -27,12 +33,6 @@
                     <input type="date" class="form-control">
                 </div>
             </form>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${hotelsNotFound != null}"
-                 th:text="${hotelsNotFound}">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <form action="#" th:action="@{/hotel/filter}" th:object="${filterHotels}" th:method="post">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
