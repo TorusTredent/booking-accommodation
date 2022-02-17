@@ -121,11 +121,6 @@ public class UserController {
         return "/user/profile";
     }
 
-    @GetMapping("/order/{hotelId}/{roomId}")
-    public String order(@PathVariable("hotelId") long hotelId, @PathVariable("roomId") long roomId, Model model, HttpSession session) {
-        return "/user/order";
-    }
-
     @DeleteMapping()
     public String delete(HttpSession session) {
         User sessionUser = (User) session.getAttribute("user");

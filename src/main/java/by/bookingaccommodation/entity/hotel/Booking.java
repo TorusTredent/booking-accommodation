@@ -29,8 +29,6 @@ public class Booking {
     private long userId;
     private long offerId;
     private long roomId;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
 
     @PrePersist
     protected void onCreate() {

@@ -1,6 +1,8 @@
 package by.bookingaccommodation.controller;
 
+import by.bookingaccommodation.dto.DatePeriodDto;
 import by.bookingaccommodation.dto.hotel.FilterHotelDto;
+import by.bookingaccommodation.entity.hotel.BookingPeriod;
 import by.bookingaccommodation.entity.hotel.Hotel;
 import by.bookingaccommodation.entity.hotel.Room;
 import by.bookingaccommodation.service.HotelService;
@@ -40,6 +42,7 @@ public class HomeHotelController {
         int currentPage = page.orElse(1);
         String country = (String) session.getAttribute("country");
         List<Hotel> hotels = (List<Hotel>) session.getAttribute("hotels");
+        BookingPeriod bookingPeriod = (BookingPeriod) session.getAttribute("datePeriod");
         if (operation && hotels == null) {
             model.addAttribute("hotelsNotFound", "Hotels not found");
         }
@@ -56,6 +59,7 @@ public class HomeHotelController {
         model.addAttribute("totalItems", hotelPage.getTotalElements());
         model.addAttribute("hotelList", hotelList);
         model.addAttribute("costs", roomsCostByHotelId);
+        model.addAttribute("datePeriod", bookingPeriod == null ? new BookingPeriod() : bookingPeriod);
         operation = false;
         return "homeHotel";
     }
@@ -68,9 +72,24 @@ public class HomeHotelController {
         return "redirect: /hotel/home";
     }
 
+    @PostMapping("/setDate")
+    public String setDatePeriod(@ModelAttribute("datePeriod") BookingPeriod date, HttpSession session, Model model) {
+        List<Hotel> hotels = (List<Hotel>) session.getAttribute("hotels");
+        if (hotels == null || hotels.isEmpty()) {
+            String country = (String) session.getAttribute("country");
+            hotels = hotelService.findHotelsByCountry(country);
+        }
+        List<Room> rooms = roomService.findRoomsByHotelId(hotels);
+        rooms = roomService.findRoomsByDatePeriod(mapper.map(date, BookingPeriod.class), rooms);
+        session.setAttribute("hotels", hotelService.findHotelsBySort(rooms));
+        session.setAttribute("datePeriod", mapper.map(date, BookingPeriod.class));
+        operation = true;
+        return "redirect:/hotel/home";
+    }
+
     @PostMapping("/filter")
     public String filtering(@ModelAttribute("filterHotels") FilterHotelDto filterHotelDto, BindingResult bindingResult,
-                          Model model, HttpSession session) {
+                            Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("filterHotels", filterHotelDto);
             return "/homeHotel";
@@ -82,6 +101,7 @@ public class HomeHotelController {
         return "redirect:/hotel/home";
     }
 
+
     private List<Hotel> findHotelsBySortAndCountry(FilterHotelDto filterHotelDto, String country) {
         List<Hotel> hotelsByCountry = hotelService.findHotelsByCountry(country);
         List<Room> roomsByHotelId = roomService.findRoomsByHotelId(hotelsByCountry);
@@ -89,6 +109,4 @@ public class HomeHotelController {
         List<Hotel> sortedHotelsByRooms = hotelService.findHotelsBySort(roomsBySort);
         return hotelService.sortedHotelsByRating(sortedHotelsByRooms, filterHotelDto.getRating());
     }
-
-
 }

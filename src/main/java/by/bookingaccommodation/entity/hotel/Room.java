@@ -26,6 +26,9 @@ public class Room {
     private boolean miniBar;
     private long hotelId;
 
+    @ManyToMany()
+    private List<BookingPeriod> periods;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> imageUrls;
 
