@@ -27,7 +27,6 @@ public class Booking {
     private long id;
     private long number;
     private long userId;
-    private long offerId;
     private long roomId;
 
     @PrePersist

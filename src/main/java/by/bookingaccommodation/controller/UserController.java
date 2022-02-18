@@ -83,7 +83,6 @@ public class UserController {
                       Model model, HttpSession session) {
         try {
             if (!bindingResult.hasErrors()) {
-
                 User user = userService.findByEmail(mapper.map(userDto, User.class).getEmail());
                 if (user == null) {
                     User save = userService.save(mapper.map(userDto, User.class));

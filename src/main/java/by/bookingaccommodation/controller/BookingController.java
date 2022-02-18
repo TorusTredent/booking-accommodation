@@ -1,14 +1,16 @@
 package by.bookingaccommodation.controller;
 
-import by.bookingaccommodation.dto.booking.SaveBookingDto;
 import by.bookingaccommodation.entity.User;
 import by.bookingaccommodation.entity.hotel.Booking;
+import by.bookingaccommodation.entity.hotel.BookingPeriod;
+import by.bookingaccommodation.entity.hotel.Hotel;
+import by.bookingaccommodation.entity.hotel.Room;
 import by.bookingaccommodation.service.BookingService;
-import org.modelmapper.ModelMapper;
+import by.bookingaccommodation.service.HotelService;
+import by.bookingaccommodation.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -18,40 +20,37 @@ import javax.servlet.http.HttpSession;
 public class BookingController {
 
     @Autowired
-    private ModelMapper mapper;
-
-    @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/reserve")
-    public String reserve(@RequestBody SaveBookingDto bookingDto,
-                              BindingResult bindingResult, HttpSession session, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "redirect: /hotel/personal";
-        }
+    @Autowired
+    private HotelService hotelService;
+
+    @Autowired
+    private RoomService roomService;
+
+
+    @GetMapping("/{hotelId}/{roomId}")
+    public String reserve(@PathVariable("hotelId") long hotelId, @PathVariable("roomId") long roomId,
+                          HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        Booking booking = mapper.map(bookingDto, Booking.class);
-        booking.setUserId(user.getId());
-        model.addAttribute("booking", booking);
+        BookingPeriod period = (BookingPeriod) session.getAttribute("datePeriod");
+        Hotel hotel = hotelService.findHotelById(hotelId);
+        Room room = roomService.findRoomById(roomId);
+        model.addAttribute("datePeriod", period);
+        model.addAttribute("room", room);
+        model.addAttribute("hotel", hotel);
         model.addAttribute("user", user);
-        return "/booking/reserve";
+        return "booking/reserve";
     }
 
     @PostMapping("/reserve")
-    public String reserve(@RequestBody Booking booking, BindingResult bindingResult,
-                          Model model, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return "/booking/reserve";
-        }
-        Booking save = bookingService.reserve(booking);
-        if (save == null) {
-            model.addAttribute("errorMessage", true);
-            return "/booking/reserve";
-        } else {
-            model.addAttribute("booking", save);
-            return "redirect: /";
-            //////////доделать редирект добавления в корзину
-        }
+    public String reserve(@RequestBody Booking booking, Model model, HttpSession session) {
+        BookingPeriod datePeriod = (BookingPeriod) session.getAttribute("datePeriod");
+        Room room = roomService.findRoomById(booking.getRoomId());
+        room.getPeriods().add(datePeriod);
+        roomService.save(room);
+        bookingService.save(booking);
+        return "redirect:/home";
     }
 
     @DeleteMapping("/{bookingNumber}")
@@ -60,7 +59,7 @@ public class BookingController {
         if (!delete) {
             model.addAttribute("errorMessage", true);
         }
-        return "redirect: /";
+        return "redirect:/";
 
     }
 }

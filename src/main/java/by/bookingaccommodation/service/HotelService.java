@@ -24,35 +24,39 @@ public class HotelService {
     private HotelRepository hotelRepository;
 
     public Hotel save(Hotel hotel) {
+        log.info(String.format("User {} save", hotel.getName()));
         return hotelRepository.save(hotel);
     }
 
     public Hotel findHotelById(long id) {
-        log.info(String.format("Request hotelId {} exist", id));
+        log.info(String.format("Request Hotel by hotelId %s", id));
         return hotelRepository.findHotelById(id).orElse(null);
     }
 
     public Hotel update(Hotel hotel, Hotel hotelDto) {
-        log.info(String.format("Request update {}", hotel.getName()));
+        log.info(String.format("Request update hotel {}", hotel.getName()));
         hotelDto.setId(hotel.getId());
         hotelDto.setRating(hotel.getRating());
         return hotelRepository.save(hotelDto);
     }
 
     public void delete(Hotel hotel) {
-        log.info(String.format("Request delete {}", hotel.getName()));
+        log.info(String.format("Request delete hotel {}", hotel.getName()));
         hotelRepository.delete(hotel);
     }
 
     public List<Hotel> findHotelsByCountry(String country) {
+        log.info(String.format("Request Hotel by country %s", country));
         return hotelRepository.findAllByCountry(country).orElse(null);
     }
 
     public List<Hotel> sortedByCountry(List<Hotel> hotels, String country) {
+        log.info(String.format("Sorted hotels by country %s", country));
         return hotels.stream().filter(hotel -> hotel.getCountry().equals(country)).collect(Collectors.toList());
     }
 
     public List<Hotel> findHotelsBySort(List<Room> rooms) {
+        log.info(String.format("Request hotels by hotelId from rooms"));
         if (rooms == null) {
             return null;
         } else {
@@ -62,10 +66,12 @@ public class HotelService {
     }
 
     public List<Hotel> searchByNameAndCountry(String search, String country) {
+        log.info(String.format("Request hotels by name %s and country %s", search, country));
         return hotelRepository.findByNameAndCountry("%" + search + "%", country).orElse(null);
     }
 
     public Page<Hotel> findPaginated(int pageSize, int currentPage, List<Hotel> hotels) {
+        log.info(String.format("Pagination hotels"));
         int startItem = (currentPage - 1) * pageSize;
         List<Hotel> list;
 
@@ -80,6 +86,7 @@ public class HotelService {
     }
 
     public List<Hotel> sortedHotelsByRating(List<Hotel> hotels, double rating) {
+        log.info(String.format("Sorted hotels by rating %s", rating));
         List<Hotel> finalHotels = new ArrayList<>();
         if (hotels == null) {
             return null;

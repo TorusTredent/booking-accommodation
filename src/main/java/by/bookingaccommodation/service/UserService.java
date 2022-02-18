@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public User save (User user) {
-        log.info(String.format("User {} save", user.getEmail()));
+        log.info(String.format("User {} save", user));
         return userRepository.save(user);
     }
 

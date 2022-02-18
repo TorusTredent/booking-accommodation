@@ -23,7 +23,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="#" th:action="@{/hotel/setDate}" th:object="${datePeriod}" th:method="post">
+            <form action="#" th:action="@{/home/setDate}" th:object="${datePeriod}" th:method="post">
                 <div class="form-group">
                     <input type="date" class="form-control" th:field="*{checkInDate}">
                 </div>
@@ -34,7 +34,7 @@
                     <button class="btn btn-out btn-primary btn-square" id="button-date">Refine Search</button>
                 </div>
             </form>
-            <form action="#" th:action="@{/hotel/filter}" th:object="${filterHotels}" th:method="post">
+            <form action="#" th:action="@{/home/filter}" th:object="${filterHotels}" th:method="post">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="heading1">
@@ -274,13 +274,13 @@
             <nav>
                 <ul class="pagination justify-content-center flex-wrap">
                     <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                        <a th:href="@{/hotel/home/{page}(page=${currentPage - 1})}" class="page-link"> Previous </a>
+                        <a th:href="@{/home/{page}(page=${currentPage - 1})}" class="page-link"> Previous </a>
                     </li>
 
                     <th:block th:if="${totalPages <= 10}">
                         <li th:each="i : ${#numbers.sequence(1, totalPages)}"
                             th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
-                            <a th:href="@{/hotel/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
+                            <a th:href="@{/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
                         </li>
                     </th:block>
 
@@ -288,31 +288,31 @@
                         <th:block th:if="${currentPage <= 5 || currentPage >= totalPages - 4}">
                             <li th:each="i : ${#numbers.sequence(1, 5)}"
                                 th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
-                                <a th:href="@{/hotel/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
+                                <a th:href="@{/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
                             </li>
 
-                            <a th:href="@{/hotel/home/6}" class="page-link">...</a>
+                            <a th:href="@{/home/6}" class="page-link">...</a>
 
                             <li th:each="i : ${#numbers.sequence(totalPages - 4, totalPages)}"
                                 th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
-                                <a th:href="@{/hotel/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
+                                <a th:href="@{/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
                             </li>
                         </th:block>
 
                         <th:block th:if="${currentPage > 5 && currentPage < totalPages - 4}">
-                            <a th:href="@{/hotel/home/{page}(page=${currentPage - 5})}" class="page-link">...</a>
+                            <a th:href="@{/home/{page}(page=${currentPage - 5})}" class="page-link">...</a>
 
                             <li th:each="i : ${#numbers.sequence(currentPage - 4, currentPage + 4)}"
                                 th:class="${currentPage != i ? 'page-item' : 'page-item disabled'}">
-                                <a th:href="@{/hotel/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
+                                <a th:href="@{/home/{page}(page=${i})}" class="page-link">[[${i}]]</a>
                             </li>
 
-                            <a th:href="@{/hotel/home/{page}(page=${currentPage + 5})}" class="page-link">...</a>
+                            <a th:href="@{/home/{page}(page=${currentPage + 5})}" class="page-link">...</a>
                         </th:block>
                     </th:block>
 
                     <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                        <a th:href="@{/hotel/home/{page}(page=${currentPage + 1})}" class="page-link"> Next </a>
+                        <a th:href="@{/home/{page}(page=${currentPage + 1})}" class="page-link"> Next </a>
                     </li>
                 </ul>
             </nav>

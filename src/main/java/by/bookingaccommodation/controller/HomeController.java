@@ -1,6 +1,5 @@
 package by.bookingaccommodation.controller;
 
-import by.bookingaccommodation.dto.DatePeriodDto;
 import by.bookingaccommodation.dto.hotel.FilterHotelDto;
 import by.bookingaccommodation.entity.hotel.BookingPeriod;
 import by.bookingaccommodation.entity.hotel.Hotel;
@@ -21,8 +20,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/hotel")
-public class HomeHotelController {
+@RequestMapping("/home")
+public class HomeController {
 
     @Autowired
     private HotelService hotelService;
@@ -36,11 +35,14 @@ public class HomeHotelController {
     private static final int HOTELS_PER_PAGE = 5;
     private boolean operation;
 
-    @GetMapping(value = {"/home/{page}", "/home"})
+    @GetMapping(value = {"/{page}", "/", ""})
     public String home(@PathVariable Optional<Integer> page,
                        Model model, HttpSession session) {
         int currentPage = page.orElse(1);
         String country = (String) session.getAttribute("country");
+        if (country == null) {
+            country = "Belarus";
+        }
         List<Hotel> hotels = (List<Hotel>) session.getAttribute("hotels");
         BookingPeriod bookingPeriod = (BookingPeriod) session.getAttribute("datePeriod");
         if (operation && hotels == null) {
@@ -61,7 +63,7 @@ public class HomeHotelController {
         model.addAttribute("costs", roomsCostByHotelId);
         model.addAttribute("datePeriod", bookingPeriod == null ? new BookingPeriod() : bookingPeriod);
         operation = false;
-        return "homeHotel";
+        return "home";
     }
 
     @PostMapping("/search")
@@ -69,7 +71,15 @@ public class HomeHotelController {
         String country = (String) session.getAttribute("country");
         List<Hotel> hotels = hotelService.searchByNameAndCountry(search, country);
         session.setAttribute("hotels", hotels);
-        return "redirect: /hotel/home";
+        return "redirect:/home";
+    }
+
+    @PostMapping("/setCountry")
+    public String setCountry(@RequestParam("country") String country, HttpSession session) {
+        List<Hotel> hotels = hotelService.findHotelsByCountry(country);
+        session.setAttribute("country", country);
+        session.setAttribute("hotels", hotels);
+        return "redirect:/home";
     }
 
     @PostMapping("/setDate")
@@ -84,7 +94,7 @@ public class HomeHotelController {
         session.setAttribute("hotels", hotelService.findHotelsBySort(rooms));
         session.setAttribute("datePeriod", mapper.map(date, BookingPeriod.class));
         operation = true;
-        return "redirect:/hotel/home";
+        return "redirect:/home";
     }
 
     @PostMapping("/filter")
@@ -92,13 +102,13 @@ public class HomeHotelController {
                             Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("filterHotels", filterHotelDto);
-            return "/homeHotel";
+            return "home";
         }
         String country = (String) session.getAttribute("country");
         List<Hotel> hotels = findHotelsBySortAndCountry(filterHotelDto, country);
         session.setAttribute("hotels", hotels);
         operation = true;
-        return "redirect:/hotel/home";
+        return "redirect:/home";
     }
 
 

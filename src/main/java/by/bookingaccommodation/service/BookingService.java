@@ -1,6 +1,8 @@
 package by.bookingaccommodation.service;
 
 import by.bookingaccommodation.entity.hotel.Booking;
+import by.bookingaccommodation.entity.hotel.BookingPeriod;
+import by.bookingaccommodation.repository.BookingPeriodRepository;
 import by.bookingaccommodation.repository.BookingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public Booking reserve(Booking booking) {
+    public Booking save(Booking booking) {
         log.info(String.format("Booking {} save", booking));
         return bookingRepository.save(booking);
     }
@@ -34,6 +36,7 @@ public class BookingService {
     }
 
     public long findLastBookingNumber() {
+        log.info(String.format("Request top number exist"));
         Optional<Long> lastBookingNumber = bookingRepository.findTopByOrderByIdDesc();
         return lastBookingNumber != null ? lastBookingNumber.get() + 1 : 1;
     }

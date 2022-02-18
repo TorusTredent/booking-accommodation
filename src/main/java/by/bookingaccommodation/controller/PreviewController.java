@@ -1,5 +1,6 @@
 package by.bookingaccommodation.controller;
 
+import by.bookingaccommodation.entity.hotel.BookingPeriod;
 import by.bookingaccommodation.entity.hotel.Hotel;
 import by.bookingaccommodation.entity.hotel.Room;
 import by.bookingaccommodation.service.HotelService;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -38,7 +41,7 @@ public class PreviewController {
         imageUrls.add("https://iso.500px.com/wp-content/uploads/2016/03/stock-photo-142984111.jpg");
         imageUrls.add("https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg");
         IntStream.range(0, 20).mapToObj(i -> new Hotel("Name", "Belarus", "Minsk", "Telmana", "53/3", "+375336405535", 3, imageUrls)).forEachOrdered(hotel -> {hotelService.save(hotel);});
-        IntStream.range(0, 20).forEachOrdered(i -> roomService.save(new Room(i, 12)));
+        IntStream.range(1, 21).forEachOrdered(i -> roomService.save(new Room(i, --i)));
     }
 
 }
