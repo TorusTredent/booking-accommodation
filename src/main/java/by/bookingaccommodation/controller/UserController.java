@@ -103,7 +103,7 @@ public class UserController {
         User sessionUser = (User) session.getAttribute("user");
         model.addAttribute("user", mapper.map(sessionUser, UpdateUserDto.class));
         return "user/profile";
-    }
+
 
     @PostMapping("/update")
     public String update(@ModelAttribute("user") UpdateUserDto userDto, BindingResult bindingResult, HttpSession session, Model model) {
@@ -116,9 +116,12 @@ public class UserController {
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
-        }
+        model.addAttribute("user", sessionUser);
         return "/user/profile";
     }
+
+
+
 
     @DeleteMapping()
     public String delete(HttpSession session) {
