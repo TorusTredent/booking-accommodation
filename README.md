@@ -1,4 +1,4 @@
-# Booking-accommodation
+# Booking accommodation
 
 A web application that allows you to find a hotel and book a room (s) in it. Hotels are selected according to the selected filters, as well as using the selected period of stay. 
 
