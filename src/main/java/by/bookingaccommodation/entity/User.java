@@ -1,5 +1,7 @@
 package by.bookingaccommodation.entity;
 
+import by.bookingaccommodation.entity.roles.UserRole;
+import by.bookingaccommodation.entity.statuses.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +20,14 @@ public class User {
     private long id;
     private String email;
     private String password;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String phoneNumber;
     private String dateOfBirth;
     private String nationality;
-    private String address;
+    private String location;
+    private String imageUrl;
+    private long employeeId;
 
     @Enumerated(value = EnumType.STRING)
     private UserRole userRole = UserRole.USER;

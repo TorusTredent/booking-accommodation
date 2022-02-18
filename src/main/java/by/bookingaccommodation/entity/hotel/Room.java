@@ -24,6 +24,16 @@ public class Room {
     private boolean TV;
     private boolean internet;
     private boolean miniBar;
-    private boolean availabilityOfABathroom;
     private long hotelId;
+
+    @ManyToMany()
+    private List<BookingPeriod> periods;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> imageUrls;
+
+    public Room(long hotelId, double cost) {
+        this.hotelId = hotelId;
+        this.cost = cost;
+    }
 }
